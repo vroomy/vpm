@@ -56,3 +56,25 @@ func (v *vpm) updatePlugins() (err error) {
 
 	return
 }
+
+func (v *vpm) buildPlugins() (err error) {
+	if v.p, err = plugins.New("plugins"); err != nil {
+		err = fmt.Errorf("error initializing plugins manager: %v", err)
+		return
+	}
+
+	if len(v.cfg.Plugins) == 0 {
+		return
+	}
+
+	if err = v.addPlugins(); err != nil {
+		return
+	}
+
+	if err = v.p.Build(); err != nil {
+		err = fmt.Errorf("error building plugins: %v", err)
+		return
+	}
+
+	return
+}
