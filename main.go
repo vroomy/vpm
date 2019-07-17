@@ -29,6 +29,14 @@ func main() {
 
 		output.Success("Update complete")
 
+	case "build":
+		output.Print("Building packages")
+		if err = v.buildPlugins(); err != nil {
+			handleError(err)
+		}
+
+		output.Success("Build complete")
+
 	case "list":
 		// TODO: Finish this
 
