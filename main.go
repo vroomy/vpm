@@ -15,7 +15,7 @@ const DefaultConfigLocation = "./config.toml"
 var v vpm
 
 func main() {
-	configLocation := os.Getenv("config")
+	configLocation := os.Getenv("VROOMIE_CONFIG")
 	if len(configLocation) == 0 {
 		configLocation = DefaultConfigLocation
 	}
