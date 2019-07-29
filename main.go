@@ -3,16 +3,25 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 
 	"github.com/BurntSushi/toml"
 	"github.com/hatchify/output"
 )
 
+// DefaultConfigLocation is the default configuration location
+const DefaultConfigLocation = "./config.toml"
+
 var v vpm
 
 func main() {
+	configLocation := os.Getenv("config")
+	if len(configLocation) == 0 {
+		configLocation = DefaultConfigLocation
+	}
+
 	var err error
-	if _, err = toml.DecodeFile("./config.toml", &v.cfg); err != nil {
+	if _, err = toml.DecodeFile(configLocation, &v.cfg); err != nil {
 		handleError(err)
 	}
 
