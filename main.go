@@ -30,7 +30,7 @@ func main() {
 
 	outW := scribe.NewStdout()
 	outW.SetTypePrefix(scribe.TypeNotification, "")
-	out := scribe.NewWithWriter(outW, "")
+	out = scribe.NewWithWriter(outW, "")
 	out.Notification(":: Vroomy package manager ::")
 
 	flag.Parse()
