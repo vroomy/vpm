@@ -21,8 +21,8 @@ github.com/hatchify/output v0.0.0-20191219041843-6ec602c6aa7e h1:Ke2I+oPJqqi5ti0
 github.com/hatchify/output v0.0.0-20191219041843-6ec602c6aa7e/go.mod h1:igbKuE+sg2q7HBIVs7vCWbwDdk+6lyNoE1fDkggWc7s=
 github.com/hatchify/output-bugsnag v1.0.1 h1:2Hw9KvTYQnThxfoBNKmkDqvG/DhVT16pGxjnd3fAiZw=
 github.com/hatchify/output-bugsnag v1.0.1/go.mod h1:6H1n0rY8LMHkJJYTSddQ/mUUDu8w7zELRZ5DzZYBsmI=
-github.com/hatchify/scribe v0.0.0-20200213211534-25c033ab3c1a h1:bYgVXVeAmA7u+uh6oUxKpWG0yYAZsL3V6qQA3wbzEK4=
-github.com/hatchify/scribe v0.0.0-20200213211534-25c033ab3c1a/go.mod h1:9AQmTliv12WlDtFf8DoOs7P/QcWTnbhWwFH7AN+PQ1w=
+github.com/hatchify/scribe v0.0.0-20200214223301-181cd9c02a84 h1:tP4tkOg0UKXUuFqQyEnEI+P3Kf/xSJZbly5f5lt5vKA=
+github.com/hatchify/scribe v0.0.0-20200214223301-181cd9c02a84/go.mod h1:9AQmTliv12WlDtFf8DoOs7P/QcWTnbhWwFH7AN+PQ1w=
 github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af h1:pmfjZENx5imkbgOkpRUYLnmbU7UEFbjtDA2hxJ1ichM=
 github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af/go.mod h1:Nht3zPeWKUH0NzdCt2Blrr5ys8VGpn0CEB0cQHVjt7k=
 github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0 h1:iQTw/8FWTuc7uiaSepXwyf3o52HaUYcV+Tu66S3F5GA=
