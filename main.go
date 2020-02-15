@@ -6,13 +6,16 @@ import (
 	"os"
 
 	"github.com/BurntSushi/toml"
-	"github.com/hatchify/output"
+	"github.com/hatchify/scribe"
 )
 
 // DefaultConfigLocation is the default configuration location
 const DefaultConfigLocation = "./config.toml"
 
-var v vpm
+var (
+	v   vpm
+	out *scribe.Scribe
+)
 
 func main() {
 	configLocation := os.Getenv("VROOMY_CONFIG")
@@ -25,32 +28,36 @@ func main() {
 		handleError(err)
 	}
 
-	output.Print(":: Vroomy package manager ::")
+	outW := scribe.NewStdout()
+	outW.SetTypePrefix(scribe.TypeNotification, "")
+	out = scribe.NewWithWriter(outW, "")
+	out.Notification(":: Vroomy package manager ::")
+
 	flag.Parse()
 	cmd := flag.Arg(0)
 
 	switch cmd {
 	case "update":
-		output.Print("Updating packages")
+		out.Notification("Updating packages")
 		if err = v.updatePlugins(); err != nil {
 			handleError(err)
 		}
 
-		output.Success("Update complete")
+		out.Success("Update complete")
 
 	case "build":
-		output.Print("Building packages")
+		out.Notification("Building packages")
 		if err = v.buildPlugins(); err != nil {
 			handleError(err)
 		}
 
-		output.Success("Build complete")
+		out.Success("Build complete")
 
 	case "list":
 		// TODO: Finish this
 
 	case "help":
-		output.Print("Supported commands are: update, list, and help.")
+		out.Notification("Supported commands are: update, list, and help.")
 
 	default:
 		err = fmt.Errorf("invalid command, \"%s\" is not supported", cmd)
