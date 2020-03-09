@@ -4,8 +4,10 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"runtime"
 
 	"github.com/BurntSushi/toml"
+	"github.com/hatchify/queue"
 	"github.com/hatchify/scribe"
 )
 
@@ -15,6 +17,8 @@ const DefaultConfigLocation = "./config.toml"
 var (
 	v   vpm
 	out *scribe.Scribe
+
+	q = queue.New(runtime.NumCPU(), 32)
 )
 
 func main() {
