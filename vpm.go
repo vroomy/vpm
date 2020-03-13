@@ -49,7 +49,7 @@ func (v *vpm) updatePlugins() (err error) {
 		return
 	}
 
-	if err = v.p.Build(); err != nil {
+	if err = v.p.BuildAsync(q); err != nil {
 		err = fmt.Errorf("error building plugins: %v", err)
 		return
 	}
@@ -71,7 +71,7 @@ func (v *vpm) buildPlugins() (err error) {
 		return
 	}
 
-	if err = v.p.Build(); err != nil {
+	if err = v.p.BuildAsync(q); err != nil {
 		err = fmt.Errorf("error building plugins: %v", err)
 		return
 	}
