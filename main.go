@@ -27,15 +27,15 @@ func main() {
 		configLocation = DefaultConfigLocation
 	}
 
-	var err error
-	if _, err = toml.DecodeFile(configLocation, &v.cfg); err != nil {
-		handleError(err)
-	}
-
 	outW := scribe.NewStdout()
 	outW.SetTypePrefix(scribe.TypeNotification, "")
 	out = scribe.NewWithWriter(outW, "")
 	out.Notification(":: Vroomy package manager ::")
+
+	var err error
+	if _, err = toml.DecodeFile(configLocation, &v.cfg); err != nil {
+		handleError(err)
+	}
 
 	flag.Parse()
 	cmd := flag.Arg(0)
