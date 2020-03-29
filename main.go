@@ -40,10 +40,18 @@ func main() {
 	flag.Parse()
 	cmd := flag.Arg(0)
 
+	// Get any potential trailing args
+	args := flag.Args()
+	if len(args) > 1 {
+		args = args[1:]
+	} else {
+		args = []string{}
+	}
+
 	switch cmd {
 	case "update":
 		out.Notification("Updating packages")
-		if err = v.updatePlugins(); err != nil {
+		if err = v.updatePlugins(args...); err != nil {
 			handleError(err)
 		}
 
@@ -51,7 +59,7 @@ func main() {
 
 	case "build":
 		out.Notification("Building packages")
-		if err = v.buildPlugins(); err != nil {
+		if err = v.buildPlugins(args...); err != nil {
 			handleError(err)
 		}
 

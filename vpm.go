@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/vroomy/plugins"
 )
@@ -11,10 +12,23 @@ type vpm struct {
 	cfg plugins.Config
 }
 
-func (v *vpm) addPlugins() (err error) {
+func (v *vpm) addPlugins(pluginNames ...string) (err error) {
 	for _, pluginKey := range v.cfg.Plugins {
-		if err = v.addPlugin(pluginKey); err != nil {
-			return
+		if len(pluginNames) == 0 {
+			if err = v.addPlugin(pluginKey); err != nil {
+				return
+			}
+		} else {
+			// Filter
+			for _, name := range pluginNames {
+				if strings.HasSuffix(pluginKey, name) {
+					if err = v.addPlugin(pluginKey); err != nil {
+						return
+					}
+
+					break
+				}
+			}
 		}
 	}
 
@@ -30,7 +44,7 @@ func (v *vpm) addPlugin(pluginKey string) (err error) {
 	return
 }
 
-func (v *vpm) updatePlugins() (err error) {
+func (v *vpm) updatePlugins(pluginNames ...string) (err error) {
 	if v.p, err = plugins.New("plugins"); err != nil {
 		err = fmt.Errorf("error initializing plugins manager: %v", err)
 		return
@@ -40,7 +54,7 @@ func (v *vpm) updatePlugins() (err error) {
 		return
 	}
 
-	if err = v.addPlugins(); err != nil {
+	if err = v.addPlugins(pluginNames...); err != nil {
 		return
 	}
 
@@ -57,7 +71,7 @@ func (v *vpm) updatePlugins() (err error) {
 	return
 }
 
-func (v *vpm) buildPlugins() (err error) {
+func (v *vpm) buildPlugins(pluginNames ...string) (err error) {
 	if v.p, err = plugins.New("plugins"); err != nil {
 		err = fmt.Errorf("error initializing plugins manager: %v", err)
 		return
@@ -67,7 +81,7 @@ func (v *vpm) buildPlugins() (err error) {
 		return
 	}
 
-	if err = v.addPlugins(); err != nil {
+	if err = v.addPlugins(pluginNames...); err != nil {
 		return
 	}
 
