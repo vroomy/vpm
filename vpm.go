@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/vroomy/plugins"
 )
@@ -12,23 +11,29 @@ type vpm struct {
 	cfg plugins.Config
 }
 
-func (v *vpm) addPlugins(pluginNames ...string) (err error) {
-	for _, pluginKey := range v.cfg.Plugins {
-		if len(pluginNames) == 0 {
-			if err = v.addPlugin(pluginKey); err != nil {
-				return
-			}
-		} else {
-			// Filter
-			for _, name := range pluginNames {
-				if strings.HasSuffix(pluginKey, name) {
-					if err = v.addPlugin(pluginKey); err != nil {
-						return
-					}
+func (v *vpm) getPluginsMatchingAny(pluginNames ...string) (plugins []string) {
+	// Unfiltered, return all plugins
+	if len(pluginNames) == 0 {
+		return v.cfg.Plugins
+	}
 
-					break
-				}
+	// Filter only plugins contained in pluginNames
+	for _, pluginKey := range v.cfg.Plugins {
+		for _, name := range pluginNames {
+			// Exact matches? Or should we match by suffix?
+			if pluginKey == name {
+				plugins = append(plugins, pluginKey)
 			}
+		}
+	}
+
+	return
+}
+
+func (v *vpm) addPlugins(pluginNames ...string) (err error) {
+	for _, pluginKey := range v.getPluginsMatchingAny(pluginNames...) {
+		if err = v.addPlugin(pluginKey); err != nil {
+			return
 		}
 	}
 
@@ -42,6 +47,12 @@ func (v *vpm) addPlugin(pluginKey string) (err error) {
 	}
 
 	return
+}
+
+func (v *vpm) listPlugins(pluginNames ...string) {
+	for _, p := range v.cfg.Plugins {
+		out.Notification(p)
+	}
 }
 
 func (v *vpm) updatePlugins(pluginNames ...string) (err error) {

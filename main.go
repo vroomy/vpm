@@ -45,7 +45,7 @@ func main() {
 	if len(args) > 1 {
 		args = args[1:]
 	} else {
-		args = []string{}
+		args = nil
 	}
 
 	switch cmd {
@@ -65,8 +65,11 @@ func main() {
 
 		out.Success("Build complete")
 
-	case "list":
+	case "test":
 		// TODO: Finish this
+		out.Error("Test not yet implemented")
+	case "list":
+		v.listPlugins()
 
 	case "help":
 		out.Notification("Supported commands are: update, list, and help.")
