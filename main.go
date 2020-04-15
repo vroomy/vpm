@@ -50,7 +50,11 @@ func main() {
 
 	switch cmd {
 	case "update":
-		out.Notification("Updating packages")
+		if len(args) > 0 {
+			out.Notificationf("Updating %v", args)
+		} else {
+			out.Notification("Updating packages")
+		}
 		if err = v.updatePlugins(args...); err != nil {
 			handleError(err)
 		}
@@ -58,7 +62,11 @@ func main() {
 		out.Success("Update complete")
 
 	case "build":
-		out.Notification("Building packages")
+		if len(args) > 0 {
+			out.Notificationf("Building %v", args)
+		} else {
+			out.Notification("Building packages")
+		}
 		if err = v.buildPlugins(args...); err != nil {
 			handleError(err)
 		}
@@ -69,10 +77,16 @@ func main() {
 		// TODO: Finish this
 		out.Error("Test not yet implemented")
 	case "list":
-		v.listPlugins()
+		if len(args) > 0 {
+			out.Notificationf("Listing %v", args)
+		} else {
+			out.Notification("Listing packages")
+		}
+		v.listPlugins(args...)
 
 	case "help":
-		out.Notification("Supported commands are: update, list, and help.")
+		// TODO: Use parg?
+		out.Notification("Supported commands are: update, build, list, and help.")
 
 	default:
 		err = fmt.Errorf("invalid command, \"%s\" is not supported", cmd)

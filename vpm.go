@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/vroomy/plugins"
 )
@@ -20,8 +21,8 @@ func (v *vpm) getPluginsMatchingAny(pluginNames ...string) (plugins []string) {
 	// Filter only plugins contained in pluginNames
 	for _, pluginKey := range v.cfg.Plugins {
 		for _, name := range pluginNames {
-			// Exact matches? Or should we match by suffix?
-			if pluginKey == name {
+			// Match name to plugin key suffix (`as <name>`, or last path component `/name`)
+			if strings.HasSuffix(pluginKey, name) {
 				plugins = append(plugins, pluginKey)
 			}
 		}
@@ -50,7 +51,7 @@ func (v *vpm) addPlugin(pluginKey string) (err error) {
 }
 
 func (v *vpm) listPlugins(pluginNames ...string) {
-	for _, p := range v.cfg.Plugins {
+	for _, p := range v.getPluginsMatchingAny(pluginNames...) {
 		out.Notification(p)
 	}
 }
