@@ -32,7 +32,7 @@ func handleError(err error) {
 
 func keyHasSuffixInAny(key string, pluginNames ...string) bool {
 	for _, name := range pluginNames {
-		if strings.HasSuffix(name, key) {
+		if strings.HasSuffix(key, name) {
 			return true
 		}
 	}
