@@ -60,14 +60,7 @@ func main() {
 
 	case "test":
 		// TODO: Finish this
-		out.Error("Test not yet implemented")
-	case "list":
-		if len(args) > 0 {
-			out.Notificationf("Listing %v", args)
-		} else {
-			out.Notification("Listing packages")
-		}
-		out.Success("Test complete!")
+		out.Warning("Test not yet implemented")
 
 	case "list":
 		out.Notificationf("Listing %s...", msg)
