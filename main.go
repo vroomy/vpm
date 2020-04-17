@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"runtime"
@@ -37,41 +36,27 @@ func main() {
 		handleError(err)
 	}
 
-	flag.Parse()
-	cmd := flag.Arg(0)
-
-	// Get any potential trailing args
-	args := flag.Args()
-	if len(args) > 1 {
-		args = args[1:]
-	} else {
-		args = nil
-	}
+	// TODO: Use parg for command parsing?
+	cmd, args, msg := parse()
 
 	switch cmd {
 	case "update":
-		if len(args) > 0 {
-			out.Notificationf("Updating %v", args)
-		} else {
-			out.Notification("Updating packages")
-		}
+		out.Notificationf("Updating %s...", msg)
+
 		if err = v.updatePlugins(args...); err != nil {
 			handleError(err)
 		}
 
-		out.Success("Update complete")
+		out.Success("Update complete!")
 
 	case "build":
-		if len(args) > 0 {
-			out.Notificationf("Building %v", args)
-		} else {
-			out.Notification("Building packages")
-		}
+		out.Notificationf("Building %s...", msg)
+
 		if err = v.buildPlugins(args...); err != nil {
 			handleError(err)
 		}
 
-		out.Success("Build complete")
+		out.Success("Build complete!")
 
 	case "test":
 		// TODO: Finish this
@@ -82,10 +67,15 @@ func main() {
 		} else {
 			out.Notification("Listing packages")
 		}
+		out.Success("Test complete!")
+
+	case "list":
+		out.Notificationf("Listing %s...", msg)
+
 		v.listPlugins(args...)
 
 	case "help":
-		// TODO: Use parg?
+		// TODO: Use parg for help docs?
 		out.Notification("Supported commands are: update, build, list, and help.")
 
 	default:
