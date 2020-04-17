@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"runtime"
@@ -37,31 +36,45 @@ func main() {
 		handleError(err)
 	}
 
-	flag.Parse()
-	cmd := flag.Arg(0)
+	// TODO: Use parg for command parsing?
+	cmd, args, msg := parse()
 
 	switch cmd {
 	case "update":
-		out.Notification("Updating packages")
-		if err = v.updatePlugins(); err != nil {
+		out.Notificationf("Updating %s...", msg)
+
+		if err = v.updatePlugins(args...); err != nil {
 			handleError(err)
 		}
 
-		out.Success("Update complete")
+		out.Success("Update complete!")
 
 	case "build":
-		out.Notification("Building packages")
-		if err = v.buildPlugins(); err != nil {
+		out.Notificationf("Building %s...", msg)
+
+		if err = v.buildPlugins(args...); err != nil {
 			handleError(err)
 		}
 
-		out.Success("Build complete")
+		out.Success("Build complete!")
+
+	case "test":
+		out.Notificationf("Testing %s...", msg)
+
+		if err = v.testPlugins(args...); err != nil {
+			handleError(err)
+		}
+
+		out.Success("Test complete!")
 
 	case "list":
-		// TODO: Finish this
+		out.Notificationf("Listing %s...", msg)
+
+		v.listPlugins(args...)
 
 	case "help":
-		out.Notification("Supported commands are: update, list, and help.")
+		// TODO: Use parg for help docs?
+		out.Notification("Supported commands are: update, build, list, and help.")
 
 	default:
 		err = fmt.Errorf("invalid command, \"%s\" is not supported", cmd)
