@@ -8,5 +8,3 @@ require (
 	github.com/hatchify/scribe v0.4.76
 	github.com/vroomy/plugins v0.4.80
 )
-
-// *** Separate Local Deps *** \\
