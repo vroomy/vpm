@@ -104,3 +104,25 @@ func (v *vpm) buildPlugins(pluginNames ...string) (err error) {
 
 	return
 }
+
+func (v *vpm) testPlugins(pluginNames ...string) (err error) {
+	if v.p, err = plugins.New("plugins"); err != nil {
+		err = fmt.Errorf("error initializing plugins manager: %v", err)
+		return
+	}
+
+	if len(v.cfg.Plugins) == 0 {
+		return
+	}
+
+	if err = v.addPlugins(pluginNames...); err != nil {
+		return
+	}
+
+	if err = v.p.TestAsync(q); err != nil {
+		err = fmt.Errorf("error testing plugins: %v", err)
+		return
+	}
+
+	return
+}

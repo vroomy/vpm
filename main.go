@@ -59,8 +59,13 @@ func main() {
 		out.Success("Build complete!")
 
 	case "test":
-		// TODO: Finish this
-		out.Warning("Test not yet implemented")
+		out.Notificationf("Testing %s...", msg)
+
+		if err = v.testPlugins(args...); err != nil {
+			handleError(err)
+		}
+
+		out.Success("Test complete!")
 
 	case "list":
 		out.Notificationf("Listing %s...", msg)
