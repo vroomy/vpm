@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 )
 
 // Parse Command Line Arguments
@@ -27,4 +28,14 @@ func parse() (cmd string, args []string, msg string) {
 func handleError(err error) {
 	out.Error(err.Error())
 	os.Exit(1)
+}
+
+func keyHasSuffixInAny(key string, pluginNames ...string) bool {
+	for _, name := range pluginNames {
+		if strings.HasSuffix(name, key) {
+			return true
+		}
+	}
+
+	return false
 }
