@@ -31,6 +31,7 @@ func handleError(err error) {
 }
 
 func keyHasSuffixInAny(key string, pluginNames ...string) bool {
+	key = removeBranchHash(key)
 	for _, name := range pluginNames {
 		if strings.HasSuffix(key, name) {
 			return true
@@ -38,4 +39,11 @@ func keyHasSuffixInAny(key string, pluginNames ...string) bool {
 	}
 
 	return false
+}
+
+func removeBranchHash(gitURL string) (out string) {
+	spl := strings.Split(gitURL, "#")
+	spl = strings.Split(spl[0], "@")
+	out = spl[0]
+	return
 }
