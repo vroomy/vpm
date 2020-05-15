@@ -29,7 +29,12 @@ func (v *vpm) getPluginsMatchingAny(pluginNames ...string) (plugins []string) {
 }
 
 func (v *vpm) addPlugins(pluginNames ...string) (err error) {
-	for _, pluginKey := range v.getPluginsMatchingAny(pluginNames...) {
+	plugins := v.getPluginsMatchingAny(pluginNames...)
+	if len(plugins) == 0 {
+		return fmt.Errorf("No plugin found matching %v", pluginNames)
+	}
+
+	for _, pluginKey := range plugins {
 		if err = v.addPlugin(pluginKey); err != nil {
 			return
 		}
