@@ -36,10 +36,8 @@ func main() {
 		handleError(err)
 	}
 
-	// TODO: Use parg for command parsing?
-	cmd, args, msg := parse()
-
-	switch cmd {
+	cmd, args, msg := parseArgs()
+	switch cmd.Action {
 	case "update":
 		out.Notificationf("Updating %s...", msg)
 
@@ -72,13 +70,14 @@ func main() {
 
 		v.listPlugins(args...)
 
-	case "help":
+	case "help", "":
 		// TODO: Use parg for help docs?
-		out.Notification("Supported commands are: update, build, list, and help.")
+		showHelp(cmd)
 
 	default:
-		err = fmt.Errorf("invalid command, \"%s\" is not supported", cmd)
+		showHelp(cmd)
+
+		err = fmt.Errorf("invalid command, \"%s\" is not supported", cmd.Action)
 		handleError(err)
 	}
-
 }
