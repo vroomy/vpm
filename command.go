@@ -31,7 +31,7 @@ func commandParams(cmd *flag.Command) (args []string, msg string) {
 
 	msg = "all Plugins"
 	if len(args) > 0 {
-		msg = strings.Join(args, ", ")
+		msg = "Plugins matching: " + strings.Join(args, ", ")
 	}
 
 	return
