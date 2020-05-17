@@ -14,5 +14,5 @@ github.com/hatchify/scribe v0.4.78 h1:35wRjRJxRbj3NBGYg0/sPGpd0HfI8tWucKPFI0upAn
 github.com/hatchify/scribe v0.4.78/go.mod h1:TLTVF/+b0yJtiVRZjW0XUMh4yVDikJZG2z3tkA+L2xM=
 github.com/hatchify/simply v0.0.16 h1:J1WGjg0ATWOMHkq6lBDzpAlTHu72AvdTM5XokrZqp0g=
 github.com/hatchify/simply v0.0.16/go.mod h1:Zt75bbQLhETkkPSie6LEtRr13bt0cy4YzQrUoOH+xbI=
-github.com/vroomy/plugins v0.4.84 h1:zxSKq5C7bin5EbBBU2KqqXN3jjcciwZiFYTVlTM7Ufc=
-github.com/vroomy/plugins v0.4.84/go.mod h1:9rxguZ3YCT5v/t3OsQojkHF0mF82dyuAj9OnLMoSW7A=
+github.com/vroomy/plugins v0.4.85 h1:NCncKJSRTo79R/zc/bVNfb1h6WxYKFZ4DK3pDecJ+t4=
+github.com/vroomy/plugins v0.4.85/go.mod h1:9rxguZ3YCT5v/t3OsQojkHF0mF82dyuAj9OnLMoSW7A=

@@ -7,5 +7,5 @@ require (
 	github.com/hatchify/parg v0.1.23
 	github.com/hatchify/queue v0.4.77
 	github.com/hatchify/scribe v0.4.78
-	github.com/vroomy/plugins v0.4.84
+	github.com/vroomy/plugins v0.4.85
 )
