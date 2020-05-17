@@ -37,11 +37,11 @@ func commandParams(cmd *flag.Command) (args []string, msg string) {
 
 func help(cmd *flag.Command) (err error) {
 	if cmd == nil {
-		fmt.Println(flag.Help())
+		fmt.Println(flag.Help(true))
 		return
 	}
 
-	fmt.Println(cmd.Help())
+	fmt.Println(cmd.Help(true))
 	return
 }
 
