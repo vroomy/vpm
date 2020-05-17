@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 
 	flag "github.com/hatchify/parg"
@@ -12,8 +11,8 @@ func commandFromArgs() (cmd *flag.Command, err error) {
 	p = flag.New()
 
 	p.AddHandler("", help, "Manages vroomy packages.\n  To learn more, run `vpm help` or `vpm help <command>`")
-	p.AddHandler("help", help, "Prints available commands and flags.\n  Use `vpm help <command>` to get more specific info.")
 
+	p.AddHandler("help", help, "Prints available commands and flags.\n  Use `vpm help <command>` to get more specific info.")
 	p.AddHandler("version", printVersion, "Prints current version of vpm installation.\n  Use `vpm version`")
 	p.AddHandler("upgrade", upgrade, "Upgrades vpm installation itself.\n  Skips if version is up to date.\n  Use `vpm upgrade` or `vpm upgrade <branch>`")
 
@@ -40,11 +39,11 @@ func commandParams(cmd *flag.Command) (args []string, msg string) {
 
 func help(cmd *flag.Command) (err error) {
 	if cmd == nil {
-		fmt.Println(flag.Help(true))
+		out.Notification("Usage ::\n\n# Vroomy Package Manager\n" + flag.Help(true))
 		return
 	}
 
-	fmt.Println(cmd.Help(true))
+	out.Notification("Usage ::\n\n# Vroomy Package Manager\n" + cmd.Help(true))
 	return
 }
 

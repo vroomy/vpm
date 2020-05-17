@@ -36,7 +36,7 @@ func upgrade(cmd *flag.Command) (err error) {
 		return
 	}
 
-	lib := gomu.LibraryFromPath(path.Join(usr.HomeDir, "go", "src", "github.com", "vroomy", "vroomy"))
+	lib := gomu.LibraryFromPath(path.Join(usr.HomeDir, "go", "src", "github.com", "vroomy", "vpm"))
 
 	if len(cmd.Arguments) > 0 {
 		// Set version from args
@@ -50,7 +50,7 @@ func upgrade(cmd *flag.Command) (err error) {
 	}
 
 	lib.File.Output("Checking Installation...")
-	currentVersion, _ = lib.File.CmdOutput("vroomy", "version")
+	currentVersion, _ = lib.File.CmdOutput("vpm", "version")
 	originalBranch, _ = lib.File.CurrentBranch()
 	hasChanges = lib.File.HasChanges()
 	latestTag = lib.GetLatestTag()
@@ -98,7 +98,7 @@ func upgrade(cmd *flag.Command) (err error) {
 	lib.File.Output("Upgrading Installation from " + currentVersion + " to " + version + "...")
 
 	if len(version) > 0 {
-		lib.File.Output("Setting local vroomy repo to: " + version + "...")
+		lib.File.Output("Setting local vpm repo to: " + version + "...")
 
 		if err = lib.File.CheckoutBranch(version); err != nil {
 			lib.File.Output("Failed to checkout " + version + " :(")
@@ -170,10 +170,10 @@ func upgrade(cmd *flag.Command) (err error) {
 
 	lib.File.Output("Installing " + version + "...")
 
-	if err = lib.File.RunCmd("./install", version); err != nil {
+	if err = lib.File.RunCmd("./bin/install", version); err != nil {
 		// Try again with permissions
 		err = nil
-		if err = lib.File.RunCmd("sudo", "./install", version); err != nil {
+		if err = lib.File.RunCmd("sudo", "./bin/install", version); err != nil {
 			lib.File.Output("Failed to install :(")
 
 			if len(originalBranch) > 0 {

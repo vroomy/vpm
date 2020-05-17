@@ -22,25 +22,30 @@ var (
 )
 
 func main() {
-	configLocation := os.Getenv("VROOMY_CONFIG")
-	if len(configLocation) == 0 {
-		configLocation = DefaultConfigLocation
-	}
-
+	var err error
 	outW = scribe.NewStdout()
 	outW.SetTypePrefix(scribe.TypeNotification, ":: vpm :: ")
 	out = scribe.NewWithWriter(outW, "")
-	out.Notification("Vroomy Package Manager ::")
 
-	var err error
-	if _, err = toml.DecodeFile(configLocation, &v.cfg); err != nil {
-		handleError(err)
+	configLocation := os.Getenv("VROOMY_CONFIG")
+	if len(configLocation) == 0 {
+		configLocation = DefaultConfigLocation
 	}
 
 	var cmd *flag.Command
 	if cmd, err = commandFromArgs(); err != nil {
 		help(cmd)
 		handleError(err)
+	}
+
+	switch cmd.Action {
+	case "help", "version", "upgrade":
+		// No config needed
+	default:
+		// Parse config
+		if _, err = toml.DecodeFile(configLocation, &v.cfg); err != nil {
+			handleError(err)
+		}
 	}
 
 	if err = cmd.Exec(); err != nil {
