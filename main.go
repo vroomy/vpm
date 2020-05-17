@@ -14,8 +14,9 @@ import (
 const DefaultConfigLocation = "./config.toml"
 
 var (
-	v   vpm
-	out *scribe.Scribe
+	v    vpm
+	out  *scribe.Scribe
+	outW *scribe.Stdout
 
 	q = queue.New(runtime.NumCPU(), 32)
 )
@@ -26,7 +27,7 @@ func main() {
 		configLocation = DefaultConfigLocation
 	}
 
-	outW := scribe.NewStdout()
+	outW = scribe.NewStdout()
 	outW.SetTypePrefix(scribe.TypeNotification, ":: vpm :: ")
 	out = scribe.NewWithWriter(outW, "")
 	out.Notification("Vroomy Package Manager ::")

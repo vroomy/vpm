@@ -6,11 +6,20 @@ import (
 
 	gomu "github.com/hatchify/mod-utils"
 	flag "github.com/hatchify/parg"
+	"github.com/hatchify/scribe"
 )
+
+var version = "undefined"
+
+func printVersion(cmd *flag.Command) (err error) {
+	outW.SetTypePrefix(scribe.TypeNotification, "")
+	out.Notification(version)
+
+	return
+}
 
 func upgrade(cmd *flag.Command) (err error) {
 	var (
-		lib            gomu.Library
 		output         string
 		version        string
 		currentVersion string
@@ -27,7 +36,7 @@ func upgrade(cmd *flag.Command) (err error) {
 		return
 	}
 
-	lib.File.Path = path.Join(usr.HomeDir, "go", "src", "github.com", "vroomy", "vroomy")
+	lib := gomu.LibraryFromPath(path.Join(usr.HomeDir, "go", "src", "github.com", "vroomy", "vroomy"))
 
 	if len(cmd.Arguments) > 0 {
 		// Set version from args
@@ -41,7 +50,7 @@ func upgrade(cmd *flag.Command) (err error) {
 	}
 
 	lib.File.Output("Checking Installation...")
-	currentVersion, _ = lib.File.CmdOutput("gomu", "version")
+	currentVersion, _ = lib.File.CmdOutput("vroomy", "version")
 	originalBranch, _ = lib.File.CurrentBranch()
 	hasChanges = lib.File.HasChanges()
 	latestTag = lib.GetLatestTag()
@@ -89,7 +98,7 @@ func upgrade(cmd *flag.Command) (err error) {
 	lib.File.Output("Upgrading Installation from " + currentVersion + " to " + version + "...")
 
 	if len(version) > 0 {
-		lib.File.Output("Setting local gomu repo to: " + version + "...")
+		lib.File.Output("Setting local vroomy repo to: " + version + "...")
 
 		if err = lib.File.CheckoutBranch(version); err != nil {
 			lib.File.Output("Failed to checkout " + version + " :(")
@@ -161,10 +170,10 @@ func upgrade(cmd *flag.Command) (err error) {
 
 	lib.File.Output("Installing " + version + "...")
 
-	if err = lib.File.RunCmd("./install.sh", version); err != nil {
+	if err = lib.File.RunCmd("./install", version); err != nil {
 		// Try again with permissions
 		err = nil
-		if err = lib.File.RunCmd("sudo", "./install.sh", version); err != nil {
+		if err = lib.File.RunCmd("sudo", "./install", version); err != nil {
 			lib.File.Output("Failed to install :(")
 
 			if len(originalBranch) > 0 {
