@@ -36,7 +36,7 @@ func upgrade(cmd *flag.Command) (err error) {
 		return
 	}
 
-	lib := gomu.LibraryFromPath(path.Join(usr.HomeDir, "go", "src", "github.com", "vpm", "vpm"))
+	lib := gomu.LibraryFromPath(path.Join(usr.HomeDir, "go", "src", "github.com", "vroomy", "vpm"))
 
 	if len(cmd.Arguments) > 0 {
 		// Set version from args
