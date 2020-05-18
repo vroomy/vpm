@@ -49,7 +49,7 @@ func upgrade(cmd *flag.Command) (err error) {
 		version = cmd.StringFrom("-branch")
 	}
 
-	lib.File.Output("Checking Installation...")
+	lib.File.Output("Checking vpm installation...")
 	currentVersion, _ = lib.File.CmdOutput("vpm", "version")
 	originalBranch, _ = lib.File.CurrentBranch()
 	hasChanges = lib.File.HasChanges()
