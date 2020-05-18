@@ -36,7 +36,7 @@ func upgrade(cmd *flag.Command) (err error) {
 		return
 	}
 
-	lib := gomu.LibraryFromPath(path.Join(usr.HomeDir, "go", "src", "github.com", "vroomy", "vpm"))
+	lib := gomu.LibraryFromPath(path.Join(usr.HomeDir, "go", "src", "github.com", "vpm", "vpm"))
 
 	if len(cmd.Arguments) > 0 {
 		// Set version from args
@@ -95,7 +95,11 @@ func upgrade(cmd *flag.Command) (err error) {
 		msg = "latest"
 	}
 
-	out.Notification("Upgrading Installation from " + currentVersion + " to " + version + "...")
+	if hasChanges {
+		msg += " with local changes"
+	}
+
+	out.Notification("Upgrading Installation from " + currentVersion + " to " + msg + "...")
 
 	if len(version) > 0 {
 		out.Notification("Setting local vpm repo to: " + version + "...")
@@ -139,7 +143,7 @@ func upgrade(cmd *flag.Command) (err error) {
 			output, err = lib.File.CmdOutput("git", "rev-parse", "HEAD")
 
 			if err != nil {
-				out.Notification("No revision head. Cannot checkout version.")
+				out.Error("No revision head. Cannot checkout version.")
 
 				if len(originalBranch) > 0 {
 					lib.File.CheckoutBranch(originalBranch)
@@ -186,11 +190,11 @@ func upgrade(cmd *flag.Command) (err error) {
 		lib.File.RunCmd("sudo", "chown", "-R", usr.Name, path.Join(usr.HomeDir, "go", "pkg"))
 	}
 
-	out.Notification("Installed Successfully!")
-
 	if len(originalBranch) > 0 {
 		lib.File.CheckoutBranch(originalBranch)
 	}
+
+	out.Successf("Installed vpm %s successfully!", version)
 
 	return
 }
