@@ -3,12 +3,12 @@ package main
 import (
 	"strings"
 
-	flag "github.com/hatchify/parg"
+	parg "github.com/hatchify/parg"
 )
 
-func commandFromArgs() (cmd *flag.Command, err error) {
-	var p *flag.Parg
-	p = flag.New()
+func commandFromArgs() (cmd *parg.Command, err error) {
+	var p *parg.Parg
+	p = parg.New()
 
 	p.AddHandler("", help, "Manages vroomy packages.\n  To learn more, run `vpm help` or `vpm help <command>`")
 
@@ -22,11 +22,17 @@ func commandFromArgs() (cmd *flag.Command, err error) {
 	p.AddHandler("list", list, "Lists the plugin(s) and associated key/alias.\n  Accepts filtered trailing args to target specific plugins.\n  Use `vpm list` for all plugins, or `vpm list <plugin> <plugin>`")
 	p.AddHandler("test", test, "Tests the currently checked out version of plugin(s).\n  Accepts filtered trailing args to target specific plugins.\n  Use `vpm test` for all plugins, or `vpm test <plugin> <plugin>`")
 
-	cmd, err = flag.Validate()
+	p.AddGlobalFlag(parg.Flag{
+		Name:        "branch",
+		Help:        "Targets provided branch, regardless of settings in config.\n  Allows dynamic overrides for config values.\n  Use `vpm update <plugin> <plugin> -b <branch>`",
+		Identifiers: []string{"-branch", "-b"},
+	})
+
+	cmd, err = parg.Validate()
 	return
 }
 
-func commandParams(cmd *flag.Command) (args []string, msg string) {
+func commandParams(cmd *parg.Command) (args []string, msg string) {
 	args = cmd.Args()
 
 	msg = "all Plugins"
@@ -37,9 +43,9 @@ func commandParams(cmd *flag.Command) (args []string, msg string) {
 	return
 }
 
-func help(cmd *flag.Command) (err error) {
+func help(cmd *parg.Command) (err error) {
 	if cmd == nil {
-		out.Notification("Usage ::\n\n# Vroomy Package Manager\n" + flag.Help(true))
+		out.Notification("Usage ::\n\n# Vroomy Package Manager\n" + parg.Help(true))
 		return
 	}
 
@@ -47,11 +53,13 @@ func help(cmd *flag.Command) (err error) {
 	return
 }
 
-func update(cmd *flag.Command) (err error) {
+func update(cmd *parg.Command) (err error) {
 	args, msg := commandParams(cmd)
 	out.Notificationf("Updating %s...", msg)
 
-	if err := v.updatePlugins(args...); err != nil {
+	// Use flag branch instead of config branch
+
+	if err := v.updatePlugins(cmd.StringFrom("branch"), args...); err != nil {
 		handleError(err)
 	}
 
@@ -59,7 +67,7 @@ func update(cmd *flag.Command) (err error) {
 	return
 }
 
-func build(cmd *flag.Command) (err error) {
+func build(cmd *parg.Command) (err error) {
 	args, msg := commandParams(cmd)
 	out.Notificationf("Building %s...", msg)
 
@@ -71,7 +79,7 @@ func build(cmd *flag.Command) (err error) {
 	return
 }
 
-func test(cmd *flag.Command) (err error) {
+func test(cmd *parg.Command) (err error) {
 	args, msg := commandParams(cmd)
 	out.Notificationf("Testing %s...", msg)
 
@@ -83,7 +91,7 @@ func test(cmd *flag.Command) (err error) {
 	return
 }
 
-func list(cmd *flag.Command) (err error) {
+func list(cmd *parg.Command) (err error) {
 	args, msg := commandParams(cmd)
 	out.Notificationf("Listing %s...", msg)
 
