@@ -58,7 +58,7 @@ func (v *vpm) listPlugins(pluginNames ...string) {
 	}
 }
 
-func (v *vpm) updatePlugins(pluginNames ...string) (err error) {
+func (v *vpm) updatePlugins(branch string, pluginNames ...string) (err error) {
 	if v.p, err = plugins.New("plugins"); err != nil {
 		err = fmt.Errorf("error initializing plugins manager: %v", err)
 		return
@@ -68,6 +68,7 @@ func (v *vpm) updatePlugins(pluginNames ...string) (err error) {
 		return
 	}
 
+	v.p.Branch = branch
 	if err = v.addPlugins(pluginNames...); err != nil {
 		return
 	}
