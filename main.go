@@ -4,10 +4,10 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/BurntSushi/toml"
 	flag "github.com/hatchify/parg"
 	"github.com/hatchify/queue"
 	"github.com/hatchify/scribe"
+	"github.com/vroomy/config"
 )
 
 // DefaultConfigLocation is the default configuration location
@@ -43,7 +43,7 @@ func main() {
 		// No config needed
 	default:
 		// Parse config
-		if _, err = toml.DecodeFile(configLocation, &v.cfg); err != nil {
+		if v.cfg, err = config.NewConfig(configLocation); err != nil {
 			handleError(err)
 		}
 	}
