@@ -38,6 +38,10 @@ func main() {
 		handleError(err)
 	}
 
+	if customCfg := cmd.StringFrom("config"); customCfg != "" {
+		configLocation = customCfg
+	}
+
 	switch cmd.Action {
 	case "help", "version", "upgrade":
 		// No config needed
