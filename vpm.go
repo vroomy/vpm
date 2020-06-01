@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 
+	"github.com/vroomy/config"
 	"github.com/vroomy/plugins"
 )
 
 type vpm struct {
 	p   *plugins.Plugins
-	cfg plugins.Config
+	cfg *config.Config
 }
 
 func (v *vpm) getPluginsMatchingAny(pluginNames ...string) (plugins []string) {
@@ -59,7 +60,7 @@ func (v *vpm) listPlugins(pluginNames ...string) {
 }
 
 func (v *vpm) updatePlugins(branch string, pluginNames ...string) (err error) {
-	if v.p, err = plugins.New("plugins"); err != nil {
+	if v.p, err = plugins.New("build"); err != nil {
 		err = fmt.Errorf("error initializing plugins manager: %v", err)
 		return
 	}
@@ -87,7 +88,7 @@ func (v *vpm) updatePlugins(branch string, pluginNames ...string) (err error) {
 }
 
 func (v *vpm) buildPlugins(pluginNames ...string) (err error) {
-	if v.p, err = plugins.New("plugins"); err != nil {
+	if v.p, err = plugins.New("build"); err != nil {
 		err = fmt.Errorf("error initializing plugins manager: %v", err)
 		return
 	}
@@ -109,7 +110,7 @@ func (v *vpm) buildPlugins(pluginNames ...string) (err error) {
 }
 
 func (v *vpm) testPlugins(pluginNames ...string) (err error) {
-	if v.p, err = plugins.New("plugins"); err != nil {
+	if v.p, err = plugins.New("build"); err != nil {
 		err = fmt.Errorf("error initializing plugins manager: %v", err)
 		return
 	}

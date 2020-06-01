@@ -28,6 +28,12 @@ func commandFromArgs() (cmd *parg.Command, err error) {
 		Identifiers: []string{"-branch", "-b"},
 	})
 
+	p.AddGlobalFlag(parg.Flag{
+		Name:        "config",
+		Help:        "Initializes vpm with specified config file.\n  Use `vpm update -config \"config.example.toml\"`",
+		Identifiers: []string{"-config"},
+	})
+
 	cmd, err = parg.Validate()
 	return
 }
