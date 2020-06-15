@@ -3,6 +3,8 @@ package main
 import (
 	"os"
 	"strings"
+
+	"github.com/vroomy/plugins"
 )
 
 func handleError(err error) {
@@ -11,10 +13,10 @@ func handleError(err error) {
 }
 
 func keyHasSuffixInAny(key string, pluginNames ...string) bool {
-	var strippedKey string
-	strippedKey = removeBranchHash(key)
+	_, key = plugins.ParseKey(key)
 	for _, name := range pluginNames {
-		if strings.HasSuffix(key, name) || strings.HasSuffix(strippedKey, name) {
+		_, name = plugins.ParseKey(name)
+		if name == key {
 			return true
 		}
 	}
