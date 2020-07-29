@@ -36,8 +36,8 @@ github.com/hatchify/simply v0.0.17 h1:JZBt1K5+Gc+ZiOl96AEK9rNBF42tMMwEajltIbdXnb
 github.com/hatchify/simply v0.0.17/go.mod h1:Zt75bbQLhETkkPSie6LEtRr13bt0cy4YzQrUoOH+xbI=
 github.com/remeh/sizedwaitgroup v1.0.0 h1:VNGGFwNo/R5+MJBf6yrsr110p0m4/OX4S3DCy7Kyl5E=
 github.com/remeh/sizedwaitgroup v1.0.0/go.mod h1:3j2R4OIe/SeS6YDhICBy22RWjJC5eNCJ1V+9+NVNYlo=
-github.com/vroomy/config v0.0.8 h1:1YmI37nK8Upp56TqccRr/Gy3IYQF6lQGqSA+7DNE3Nk=
-github.com/vroomy/config v0.0.8/go.mod h1:3K8lB+4xGqD5LZPvbwjiC2gCLN7UHHPqHqrorZE94ZA=
+github.com/vroomy/config v0.0.9 h1:nhAWdPVMQwqnI12G/HalaFnUHiEXeEii1rLWz0FqxOw=
+github.com/vroomy/config v0.0.9/go.mod h1:3K8lB+4xGqD5LZPvbwjiC2gCLN7UHHPqHqrorZE94ZA=
 github.com/vroomy/plugins v0.4.91/go.mod h1:9rxguZ3YCT5v/t3OsQojkHF0mF82dyuAj9OnLMoSW7A=
 github.com/vroomy/plugins v0.4.92 h1:TnejYGK32kbX7OI6VirOOy5E52ePfqdOgLrAs1Cw8vI=
 github.com/vroomy/plugins v0.4.92/go.mod h1:R0UpYY8iKtFWXtMBcr1eThib8FXSsJSwRZTfci0DEAo=
