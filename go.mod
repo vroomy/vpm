@@ -8,5 +8,5 @@ require (
 	github.com/hatchify/queue v0.4.79
 	github.com/hatchify/scribe v0.4.84
 	github.com/vroomy/config v0.0.15
-	github.com/vroomy/plugins v0.4.96
+	github.com/vroomy/plugins v0.4.98
 )
