@@ -7,6 +7,6 @@ require (
 	github.com/hatchify/parg v0.1.29
 	github.com/hatchify/queue v0.4.79
 	github.com/hatchify/scribe v0.4.85
-	github.com/vroomy/config v0.0.23
+	github.com/vroomy/config v0.0.24
 	github.com/vroomy/plugins v0.4.100
 )
