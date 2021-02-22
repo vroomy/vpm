@@ -14,18 +14,15 @@ import (
 const DefaultConfigLocation = "./config.toml"
 
 var (
-	v    vpm
-	out  *scribe.Scribe
-	outW *scribe.Stdout
+	v   vpm
+	out *scribe.Scribe
 
 	q = queue.New(runtime.NumCPU(), 32)
 )
 
 func main() {
 	var err error
-	outW = scribe.NewStdout()
-	outW.SetTypePrefix(scribe.TypeNotification, ":: vpm :: ")
-	out = scribe.NewWithWriter(outW, "")
+	out = scribe.New("vpm")
 
 	configLocation := os.Getenv("VROOMY_CONFIG")
 	if len(configLocation) == 0 {
